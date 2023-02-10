@@ -11,8 +11,13 @@ async function register(data:ClienteCreationDTO) {
   }
 };
 
+async function findAll() {
+  return await clienteRepository.getClients();
+}
+
 const clienteServices = {
-  register
+  register,
+  findAll
 };
 
 export default clienteServices;

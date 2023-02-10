@@ -29,7 +29,7 @@ export default function InitialPage() {
       empresa ? 
       <Content>
         <div className="clientes">
-          <button>
+          <button onClick={() => navigate('/clients')}>
             Listar Clientes
           </button>
           <button onClick={() => navigate('/client/add')}>

@@ -6,7 +6,7 @@ async function insert(data:ClienteCreationDTO) {
 };
 
 async function getClients() {
-  return await prisma.cliente.findMany();
+  return await prisma.cliente.findMany({orderBy:[{id:'desc'}]});
 }
 
 const clienteRepository = {

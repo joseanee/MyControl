@@ -8,8 +8,8 @@ export default function ClienteRegister() {
   const [name, setName] = useState('');
   const [telefone, setTelefone] = useState('');
   const [pix, setPix] = useState('');
-  const [cpf, setCpf] = useState('');
-  const [cnpj, setCnpj] = useState('');
+  const [cpf, setCpf] = useState();
+  const [cnpj, setCnpj] = useState();
   const [rua, setRua] = useState('');
   const [bairro, setBairro] = useState('');
   const [cep, setCep] = useState('');
