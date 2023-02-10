@@ -17,22 +17,11 @@ model Empresa {
   description String
   telefone String
   cnpj String
-  addresses Address[]
-}
-
-model Address {
-  id Int @id @default(autoincrement())
   rua String
   bairro String
   cep String
   cidade String
   estado String
-  empresaId Int
-  clienteId Int
-  empresa Empresa @relation(fields: [empresaId], references: [id])
-  cliente Cliente @relation(fields: [clienteId], references: [id])
-
-  @@map("addresses")
 }
 
 model Cliente {
@@ -42,7 +31,11 @@ model Cliente {
   pix String
   cpf String?
   cnpj String?
-  addresses Address[]
+  rua String
+  bairro String
+  cep String
+  cidade String
+  estado String
 
   @@map("clientes")
 }
