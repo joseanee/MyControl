@@ -3,9 +3,46 @@
 
 generator client {
   provider = "prisma-client-js"
+  engineType = "binary"
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+model Empresa {
+  id Int @id @default(autoincrement())
+  name String
+  description String
+  telefone String
+  cnpj String
+  addresses Address[]
+}
+
+model Address {
+  id Int @id @default(autoincrement())
+  rua String
+  bairro String
+  cep String
+  cidade String
+  estado String
+  empresaId Int
+  clienteId Int
+  empresa Empresa @relation(fields: [empresaId], references: [id])
+  cliente Cliente @relation(fields: [clienteId], references: [id])
+
+  @@map("addresses")
+}
+
+model Cliente {
+  id Int @id @default(autoincrement())
+  name String
+  telefone String
+  pix String
+  cpf String?
+  cnpj String?
+  addresses Address[]
+
+  @@map("clientes")
 }
