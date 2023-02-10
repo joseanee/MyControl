@@ -12,9 +12,14 @@ export const Container = styled.div`
   overflow-y: scroll;
 
   .title {
+    display: flex;
     position: absolute;
     top: 6px;
-    left: 50%;
+    left: 40%;
+
+    h1 {
+      margin-right: 8px;
+    }
   }
 
   .voltar {

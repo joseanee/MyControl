@@ -1,10 +1,24 @@
 import styled from "styled-components/macro";
 import { Cliente } from "../entities/Cliente";
+import { IoBrush, IoClose } from "react-icons/io5";
+import axios from "axios";
+import { Link } from "react-router-dom";
 
-export default function Clientes(props:Cliente[]) {
+export default function Clientes(props:Cliente[], setChangeState:any, changeState:number) {
+
+  async function deleteCliente(id:number) {
+    try {
+      await axios.delete(`${import.meta.env.VITE_URL}/clients/delete/${id}`);
+      setChangeState(changeState + 1);
+      alert("Removido com sucesso!");
+    } catch (error) {
+      alert(error);
+    }
+  }
+
   return(
-    props.map(cliente => 
-    <Container>
+    props.map((cliente, index) => 
+    <Container key={index}>
       <h1>Nome: {cliente.name}</h1>
       <h1>Fone: {cliente.telefone}</h1>
       <h1>PIX: {cliente.pix}</h1>
@@ -18,6 +32,12 @@ export default function Clientes(props:Cliente[]) {
       <h1>Bairro: {cliente.bairro}</h1>
       <h1>CEP: {cliente.cep}</h1>
       <h1>{cliente.cidade}/{cliente.estado}</h1>
+      <div className="options">
+        <Link to={`/clients/update/${cliente.id}`}>
+          <IoBrush color="purple" size={20} cursor="pointer" />
+        </Link>
+        <IoClose color="red" size={20} cursor="pointer" onClick={() => deleteCliente(cliente.id)}/>
+      </div>
     </Container>)
   )
 }
@@ -31,9 +51,23 @@ const Container = styled.div`
   margin: 4px;
   overflow-y: scroll;
 
+  position: relative;
+
   h1 {
     margin: 6px;
     font-size: 16px;
     word-wrap: break-word;
+  }
+
+  .options {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+
+    height: 60px;
+
+    justify-content: space-around;
   }
 `
