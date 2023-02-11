@@ -10,8 +10,9 @@ export const Content = styled.div`
   width: 100%;
   margin-top: 12px;
   border: solid 2px #000;
+  display: flex;
 
-  .clientes {
+  .clientes, .produtos {
     display: flex;
     flex-direction: column;
     width: 240px;

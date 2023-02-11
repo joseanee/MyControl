@@ -39,3 +39,13 @@ model Cliente {
 
   @@map("clientes")
 }
+
+model Produto {
+  id Int @id @default(autoincrement())
+  nome String
+  quantidade Int
+  medida String
+  preco Float
+
+  @@map("produtos")
+}

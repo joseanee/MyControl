@@ -36,6 +36,14 @@ export default function InitialPage() {
             Cadastrar Cliente
           </button>
         </div>
+        <div className="produtos">
+          <button onClick={() => navigate('/products')}>
+            Listar Produtos
+          </button>
+          <button onClick={() => navigate('/products/add')}>
+            Cadastrar Produtos
+          </button>
+        </div>
       </Content>
       : 
       ''
