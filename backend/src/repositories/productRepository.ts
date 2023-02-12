@@ -9,9 +9,14 @@ async function getProducts() {
   return await prisma.produto.findMany();
 };
 
+async function getByName(name: string) {
+  return await prisma.produto.findFirst({where:{nome:name},orderBy:{id:'desc'}});
+}
+
 const productRepository = {
   insert,
-  getProducts
+  getProducts,
+  getByName
 };
 
 export default productRepository;

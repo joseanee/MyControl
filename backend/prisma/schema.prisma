@@ -47,6 +47,7 @@ model Produto {
   quantidade Int
   medida String
   preco Float
+  purchases Purchase[]
 
   @@map("produtos")
 }
@@ -54,9 +55,10 @@ model Produto {
 model Purchase {
   id Int @id @default(autoincrement())
   clientId Int
-  productIds Int[]
+  productId Int
   createdAt DateTime @default(now())
   cliente   Cliente @relation(fields: [clientId], references: [id])
+  produto Produto @relation(fields: [productId], references: [id])
   
   @@map("purchases")
 }

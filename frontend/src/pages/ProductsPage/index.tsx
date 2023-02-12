@@ -21,6 +21,7 @@ export default function ProductsPage() {
       setProduct({});
       setProducts(res.data);
     })
+    
   },[changeState]);
 
   async function findByName(event:any) {

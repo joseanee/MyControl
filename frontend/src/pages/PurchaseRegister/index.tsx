@@ -29,12 +29,12 @@ export default function PurchaseRegister() {
       alert("Compra registrada!");
       
       setNome('');
-      setQuantidade();
+      setQuantidade(0);
       setMedida('');
-      setPreco();
+      setPreco(0);
 
     } catch (error) {
-      alert("Falha ao registrar compra!");
+      alert(error);
     }
   }
 
