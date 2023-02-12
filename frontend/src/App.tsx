@@ -7,6 +7,7 @@ import ClientesPage from "./pages/ClientesPage";
 import ClienteUpdate from "./pages/ClienteUpdate";
 import ProductRegister from "./pages/ProductRegister";
 import ProductsPage from "./pages/ProductsPage";
+import PurchaseRegister from "./pages/PurchaseRegister";
 
 export default function App(){
     const userContext = {}
@@ -22,6 +23,7 @@ export default function App(){
                     <Route path="/clients/update/:id" element={<ClienteUpdate />} />
                     <Route path="/products/add" element={<ProductRegister />} />
                     <Route path="/products" element={<ProductsPage />} />
+                    <Route path="/purchases" element={<PurchaseRegister />} />
                 </Routes>
             </UserContext.Provider>
         </BrowserRouter>

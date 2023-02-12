@@ -4,18 +4,20 @@ import { IoArrowBackCircleSharp } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 
-export default function ProductRegister() {
+export default function PurchaseRegister() {
   const [nome, setNome] = useState('');
+  const [fornecedor, setFornecedor] = useState('');
   const [quantidade, setQuantidade] = useState();
   const [medida, setMedida] = useState('');
   const [preco, setPreco] = useState();
 
   const navigate = useNavigate();
 
-  async function addProduct(event:any) {
+  async function addPurchase(event:any) {
     event.preventDefault();
 
     const body = {
+      fornecedor,
       nome,
       quantidade,
       medida,
@@ -23,11 +25,16 @@ export default function ProductRegister() {
     }
 
     try {
-      await axios.post(`${import.meta.env.VITE_URL}/products/add`,body);
-      alert("Produto registrado!");
-      navigate('/');
+      await axios.post(`${import.meta.env.VITE_URL}/purchases/add`,body);
+      alert("Compra registrada!");
+      
+      setNome('');
+      setQuantidade();
+      setMedida('');
+      setPreco();
+
     } catch (error) {
-      alert("Falha ao registrar produto!");
+      alert("Falha ao registrar compra!");
     }
   }
 
@@ -36,10 +43,15 @@ export default function ProductRegister() {
       <div className="voltar" onClick={() => navigate('/')}>
         <IoArrowBackCircleSharp color="crimson" size={60} />
       </div>
-      <form onSubmit={addProduct}>
+      <form onSubmit={addPurchase}>
+        <input type="text"
+          value={fornecedor}
+          placeholder="Fornecedor"
+          onChange={e => setFornecedor(e.target.value)}
+        />
         <input type="text"
           value={nome}
-          placeholder="Nome"
+          placeholder="Nome do produto"
           onChange={e => setNome(e.target.value)}
         />
         <input type="number"
@@ -59,7 +71,7 @@ export default function ProductRegister() {
           onChange={e => setPreco(e.target.value)}
         />
         <button type="submit">
-          Cadastrar Produto
+          Cadastrar compra
         </button>
       </form>
     </Container>
