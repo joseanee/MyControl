@@ -1,18 +1,21 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Container, Content } from "./style";
 import axios from 'axios';
 import Header from "../../components/Header";
 import { useNavigate } from "react-router-dom";
+import UserContext from "../../context/UserContext";
 
 export default function InitialPage() {
   const [empresa, setEmpresa] = useState();
 
   const navigate = useNavigate();
+  const { setInfo }:any = useContext(UserContext);
 
   useEffect(() => {
     const promise = axios.get(`${import.meta.env.VITE_URL}/info`);
 
     promise.then(res => {
+      setInfo(res.data);
       setEmpresa(res.data);
     })
     

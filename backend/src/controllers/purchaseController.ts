@@ -16,3 +16,11 @@ export async function newPurchase(req:Request, res:Response) {
 
   return res.status(201).send("Compra registrada!");
 };
+
+export async function getPurchases(req:Request, res:Response) {
+  const id = Number(req.params.id);
+
+  const purchases = await purchaseServices.getPurchases(id);
+
+  return res.status(200).send(purchases);
+};

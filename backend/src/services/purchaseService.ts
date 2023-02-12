@@ -33,9 +33,13 @@ async function insert(data: PurchaseRequest) {
 
 };
 
+async function getPurchases(id:number) {
+  return purchaseRepository.getClientPurchases(id);
+};
 
 const purchaseServices = {
-  insert
+  insert,
+  getPurchases
 };
 
 export default purchaseServices;

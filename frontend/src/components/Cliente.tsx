@@ -1,6 +1,6 @@
 import styled from "styled-components/macro";
 import { Cliente } from "../entities/Cliente";
-import { IoBrush, IoClose } from "react-icons/io5";
+import { IoBrush, IoClose, IoEye } from "react-icons/io5";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
@@ -33,10 +33,13 @@ export default function Clientes(props:Cliente[], setChangeState:any, changeStat
       <h1>CEP: {cliente.cep}</h1>
       <h1>{cliente.cidade}/{cliente.estado}</h1>
       <div className="options">
-        <Link to={`/clients/update/${cliente.id}`}>
-          <IoBrush color="purple" size={20} cursor="pointer" />
+        <Link to={`/clients/${cliente.id}/purchases`}>
+          <IoEye color="green" size={26} cursor="pointer"/>
         </Link>
-        <IoClose color="red" size={20} cursor="pointer" onClick={() => deleteCliente(cliente.id)}/>
+        <Link to={`/clients/update/${cliente.id}`}>
+          <IoBrush color="purple" size={26} cursor="pointer" />
+        </Link>
+        <IoClose color="red" size={26} cursor="pointer" onClick={() => deleteCliente(cliente.id)}/>
       </div>
     </Container>)
   )
@@ -66,7 +69,7 @@ const Container = styled.div`
     bottom: 8px;
     right: 8px;
 
-    height: 60px;
+    height: 80px;
 
     justify-content: space-around;
   }

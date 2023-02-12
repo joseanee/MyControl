@@ -8,9 +8,16 @@ import ClienteUpdate from "./pages/ClienteUpdate";
 import ProductRegister from "./pages/ProductRegister";
 import ProductsPage from "./pages/ProductsPage";
 import PurchaseRegister from "./pages/PurchaseRegister";
+import ClientePurchasesPage from "./pages/ClientePurchasesPage";
+import { useState } from "react";
 
 export default function App(){
-    const userContext = {}
+    const [info, setInfo] = useState();
+
+    const userContext = {
+        info,
+        setInfo
+    }
 
     return(
         <BrowserRouter>
@@ -20,6 +27,7 @@ export default function App(){
                     <Route path="/" element={<InitialPage />} />
                     <Route path="/client/add" element={<ClienteRegister />} />
                     <Route path="/clients" element={<ClientesPage />} />
+                    <Route path="/clients/:id/purchases" element={<ClientePurchasesPage />} />
                     <Route path="/clients/update/:id" element={<ClienteUpdate />} />
                     <Route path="/products/add" element={<ProductRegister />} />
                     <Route path="/products" element={<ProductsPage />} />
