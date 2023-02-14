@@ -1,12 +1,16 @@
 import { Purchase } from "@prisma/client";
 
-export type PurchaseCreationDTO = Omit<Purchase, "id" | "createdAt">;
+export type PurchaseCreationDTO = Omit<Purchase, "id" | "createdAt" | "forma" | "detalhe" | "valor">;
 
 export type PurchaseRequest = {
-  fornecedor:string,
-  nome:string,
-  medida:string,
-  forma: string,
-  detalhe: string,
-  valor: number
+  name: string,
+  price: number,
+  quantity: number,
+}
+
+export type PurchaseData = {
+  productId: number,
+  purchaseId: number,
+  price: number,
+  quantity: number
 }

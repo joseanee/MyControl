@@ -63,9 +63,9 @@ model PurchaseProduct {
 model Purchase {
   id Int @id @default(autoincrement())
   clientId Int
-  forma String @default("")
-  detalhe String @default("")
-  valor Float @default(0.0)
+  forma String[] @default([])
+  detalhe String[] @default([])
+  valor Float[] @default([])
   createdAt DateTime @default(now())
   cliente   Cliente @relation(fields: [clientId], references: [id])
   register PurchaseProduct[]

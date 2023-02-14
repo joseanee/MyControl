@@ -12,7 +12,7 @@ export const Content = styled.div`
   border: solid 2px #000;
   display: flex;
 
-  .clientes, .produtos, .registros {
+  .clientes, .produtos {
     display: flex;
     flex-direction: column;
     width: 240px;

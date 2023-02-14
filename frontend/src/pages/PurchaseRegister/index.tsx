@@ -1,7 +1,7 @@
 import { Container } from "./style";
 import { useEffect, useState } from "react";
 import { IoArrowBackCircleSharp } from "react-icons/io5";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from 'axios';
 
 export default function PurchaseRegister() {
@@ -10,13 +10,15 @@ export default function PurchaseRegister() {
 
   const navigate = useNavigate();
 
+  const { id } = useParams();
+
   async function addPurchase(event:any) {
     event.preventDefault();
 
     const body = items;
 
     try {
-      await axios.post(`${import.meta.env.VITE_URL}/purchases/add`,body);
+      await axios.post(`${import.meta.env.VITE_URL}/purchases/${id}/add`,body);
       alert("Compra registrada!");
     } catch (error) {
       alert(error);

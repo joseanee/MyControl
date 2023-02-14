@@ -1,37 +1,30 @@
 import { PurchaseRequest } from "../dtos/purchaseDtos";
-import { ProductCreationDTO } from "../dtos/productDtos";
+import { PurchaseCreationDTO } from "../dtos/purchaseDtos";
 import productRepository from "../repositories/productRepository";
 import clienteRepository from "../repositories/clienteRepository";
 import purchaseRepository from "../repositories/purchaseRepository";
-import { checkError } from "../middlewares/errorHandler";
 
-async function insert(data: PurchaseRequest) {
+async function insert(data: PurchaseRequest[], id:number) {
 
-  const productData:ProductCreationDTO = {
-    nome:data.nome,
-    medida:data.medida
+  const clientData:PurchaseCreationDTO = {
+    clientId:id
   };
 
-  const fornecedor = await clienteRepository.clientByName(data.fornecedor);
+  await purchaseRepository.insert(clientData);
 
-  if(!fornecedor) {
-    throw checkError(404, "Fornecedor não registrado!")
+  for(const product of data) {
+    const productId = (await productRepository.getByName(product.name)).id;
+    const purchaseId = (await purchaseRepository.getPurchaseByClientId(id)).id;
+
+    const registerData = {
+      productId,
+      purchaseId,
+      price: Number(product.price),
+      quantity: Number(product.quantity)
+    }
+
+    await purchaseRepository.registerBoughtProduct(registerData);
   }
-
-  await productRepository.insert(productData);
-
-  const product = await productRepository.getByName(productData.nome);
-
-  const purchaseData = {
-    clientId: fornecedor.id,
-    productId: product.id,
-    forma: data.forma,
-    detalhe: data.detalhe,
-    valor: data.valor
-  }
-
-  await purchaseRepository.insert(purchaseData);
-
 };
 
 async function getPurchases(id:number) {
