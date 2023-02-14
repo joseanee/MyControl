@@ -17,8 +17,10 @@ export const Container = styled.div`
     width: 40%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
+    justify-content: flex-start;
+    overflow-y: auto;
+    margin: 0;
 
     input {
       width: 100%;
@@ -37,6 +39,24 @@ export const Container = styled.div`
       font-size: 20px;
       cursor: pointer;
     }
+
+    .opcoes {
+      display: flex;
+      width: 80%;
+      border: 2px solid black;
+      min-height: 120px;
+      align-items: center;
+      padding-left: 12px;
+      overflow-x: scroll;
+
+      label {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 80px;
+      }
+    }
   }
 
   .voltar {
@@ -44,5 +64,15 @@ export const Container = styled.div`
     top: 12px;
     left: 12px;
     cursor: pointer;
+  }
+
+  .fields {
+    display: flex;
+    flex-direction: column;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    input {
+      width: 200px;
+    }
   }
 `

@@ -9,9 +9,7 @@ async function insert(data: PurchaseRequest) {
 
   const productData:ProductCreationDTO = {
     nome:data.nome,
-    medida:data.medida,
-    preco:data.preco,
-    quantidade:data.quantidade
+    medida:data.medida
   };
 
   const fornecedor = await clienteRepository.clientByName(data.fornecedor);
@@ -26,7 +24,10 @@ async function insert(data: PurchaseRequest) {
 
   const purchaseData = {
     clientId: fornecedor.id,
-    productId: product.id
+    productId: product.id,
+    forma: data.forma,
+    detalhe: data.detalhe,
+    valor: data.valor
   }
 
   await purchaseRepository.insert(purchaseData);
@@ -34,7 +35,10 @@ async function insert(data: PurchaseRequest) {
 };
 
 async function getPurchases(id:number) {
-  return purchaseRepository.getClientPurchases(id);
+  const purchases = await purchaseRepository.getClientPurchases(id);
+  const cliente = await clienteRepository.clientById(id);
+
+  return [cliente.name, purchases];
 };
 
 const purchaseServices = {

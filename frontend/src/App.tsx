@@ -8,8 +8,9 @@ import ClienteUpdate from "./pages/ClienteUpdate";
 import ProductRegister from "./pages/ProductRegister";
 import ProductsPage from "./pages/ProductsPage";
 import PurchaseRegister from "./pages/PurchaseRegister";
-import ClientePurchasesPage from "./pages/ClientePurchasesPage";
+import ReportsPage from "./pages/ReportsPage";
 import { useState } from "react";
+import ClientePurchasesPage from "./pages/ClientePurchasesPage";
 
 export default function App(){
     const [info, setInfo] = useState();
@@ -31,7 +32,7 @@ export default function App(){
                     <Route path="/clients/update/:id" element={<ClienteUpdate />} />
                     <Route path="/products/add" element={<ProductRegister />} />
                     <Route path="/products" element={<ProductsPage />} />
-                    <Route path="/purchases" element={<PurchaseRegister />} />
+                    <Route path="/purchases/:id" element={<PurchaseRegister />} />
                 </Routes>
             </UserContext.Provider>
         </BrowserRouter>

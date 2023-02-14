@@ -12,7 +12,9 @@ async function getClientPurchases(clientId:number) {
     },
     select:{
       createdAt:true,
-      produto:{}
+      forma:true,
+      detalhe:true,
+      valor:true
     }
   })
 }

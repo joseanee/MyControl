@@ -43,22 +43,32 @@ model Cliente {
 
 model Produto {
   id Int @id @default(autoincrement())
-  nome String
-  quantidade Int
+  nome String @unique
   medida String
-  preco Float
-  purchases Purchase[]
+  register PurchaseProduct[]
 
   @@map("produtos")
+}
+
+model PurchaseProduct {
+  id Int @id @default(autoincrement())
+  productId Int
+  purchaseId Int
+  price Float
+  quantity Int
+  produto Produto @relation(fields: [productId], references: [id])
+  purchase Purchase @relation(fields: [purchaseId], references: [id])
 }
 
 model Purchase {
   id Int @id @default(autoincrement())
   clientId Int
-  productId Int
+  forma String @default("")
+  detalhe String @default("")
+  valor Float @default(0.0)
   createdAt DateTime @default(now())
   cliente   Cliente @relation(fields: [clientId], references: [id])
-  produto Produto @relation(fields: [productId], references: [id])
+  register PurchaseProduct[]
   
   @@map("purchases")
 }

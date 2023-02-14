@@ -19,10 +19,7 @@ export default function Produtos(props:Produto[], setChangeState:any, changeStat
   return(
     props.map((produto, index) => 
     <Container key={index}>
-      <h1>Nome: {produto.nome}</h1>
-      <h1>Quantidade: {produto.quantidade} {produto.medida}</h1>
-      <h1>Preço por {produto.medida}: R$ {(produto.preco).toFixed(2)}</h1>
-      <h1>Total: R$ {(produto.preco * produto.quantidade).toFixed(2)}</h1>
+      <h1>Nome: {produto.nome} ({produto.medida})</h1>
       <div className="options">
         <Link to={`/clients/update/${produto.id}`}>
           <IoBrush color="purple" size={20} cursor="pointer" />
@@ -33,10 +30,10 @@ export default function Produtos(props:Produto[], setChangeState:any, changeStat
   )
 }
 
-const Container = styled.div`
+export const Container = styled.div`
   border: solid 2px #000;
-  width: 400px;
-  height: 240px;
+  width: 240px;
+  height: 80px;
   background-color: #EBECF0;
   padding: 6px;
   margin: 4px;

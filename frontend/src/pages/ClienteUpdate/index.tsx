@@ -18,7 +18,7 @@ export default function ClienteUpdate() {
 
   const navigate = useNavigate();
 
-  const { id } = useParams()
+  const { id } = useParams();
 
   useEffect(() => {
     const promise = axios.get(`${import.meta.env.VITE_URL}/clients/${id}`);

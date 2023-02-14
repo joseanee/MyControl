@@ -8,8 +8,9 @@ export async function newPurchase(req:Request, res:Response) {
     fornecedor: req.body.fornecedor,
     nome: req.body.nome,
     medida: req.body.medida,
-    quantidade: Number(req.body.quantidade),
-    preco: Number(req.body.preco)
+    forma: req.body.forma,
+    detalhe: req.body.detalhe,
+    valor: Number(req.body.valor)
   }
   
   await purchaseServices.insert(data);

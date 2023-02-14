@@ -6,9 +6,7 @@ export async function newProduct(req:Request, res:Response) {
 
   const product:ProductCreationDTO = {
     nome: req.body.nome,
-    quantidade: Number(req.body.quantidade),
-    medida: req.body.medida,
-    preco: Number(req.body.preco)
+    medida: req.body.medida
   };
   
   await productServices.insert(product);

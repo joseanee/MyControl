@@ -6,9 +6,7 @@ import axios from 'axios';
 
 export default function ProductRegister() {
   const [nome, setNome] = useState('');
-  const [quantidade, setQuantidade] = useState();
   const [medida, setMedida] = useState('');
-  const [preco, setPreco] = useState();
 
   const navigate = useNavigate();
 
@@ -17,9 +15,7 @@ export default function ProductRegister() {
 
     const body = {
       nome,
-      quantidade,
-      medida,
-      preco
+      medida
     }
 
     try {
@@ -42,21 +38,10 @@ export default function ProductRegister() {
           placeholder="Nome"
           onChange={e => setNome(e.target.value)}
         />
-        <input type="number"
-          value={quantidade}
-          placeholder="Quantidade"
-          onChange={e => setQuantidade(e.target.value)}
-        />
         <input type="text"
           value={medida}
           placeholder="Kg, Un ou Pç"
           onChange={e => setMedida(e.target.value)}
-        />
-        <input type="number"
-          step=".01"
-          value={preco}
-          placeholder="Preço"
-          onChange={e => setPreco(e.target.value)}
         />
         <button type="submit">
           Cadastrar Produto

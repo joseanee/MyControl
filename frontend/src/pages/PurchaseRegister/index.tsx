@@ -1,42 +1,64 @@
-import { Container } from "../ClienteRegister/style";
-import { useState } from "react";
+import { Container } from "./style";
+import { useEffect, useState } from "react";
 import { IoArrowBackCircleSharp } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 
 export default function PurchaseRegister() {
-  const [nome, setNome] = useState('');
-  const [fornecedor, setFornecedor] = useState('');
-  const [quantidade, setQuantidade] = useState();
-  const [medida, setMedida] = useState('');
-  const [preco, setPreco] = useState();
+  const [products, setProducts] = useState([]);
+  const [items, setItems] = useState([]);
 
   const navigate = useNavigate();
 
   async function addPurchase(event:any) {
     event.preventDefault();
 
-    const body = {
-      fornecedor,
-      nome,
-      quantidade,
-      medida,
-      preco
-    }
+    const body = items;
 
     try {
       await axios.post(`${import.meta.env.VITE_URL}/purchases/add`,body);
       alert("Compra registrada!");
-      
-      setNome('');
-      setQuantidade(0);
-      setMedida('');
-      setPreco(0);
-
     } catch (error) {
       alert(error);
     }
   }
+
+  useEffect(() => {
+    const promise = axios.get(`${import.meta.env.VITE_URL}/products`);
+
+    promise.then(res => {
+      setProducts(res.data);
+    })
+    
+  },[]);
+
+  function renderProducts() {
+    return products.map((product,index) => 
+        <label key={index}>
+          <input
+            type="checkbox"
+            value={product.nome}
+            onChange={handleCheckboxChange}
+          />
+          {product.nome}
+        </label>
+      )
+  }
+
+  const handleCheckboxChange = (event) => {
+    const name = event.target.value;
+    if (event.target.checked) {
+      setItems([...items, { name: name, price: "", quantity: "" }]);
+    } else {
+      setItems(items.filter((item) => item.name !== name));
+    }
+  };
+
+  const handleItemChange = (index, name, value) => {
+    const list = [...items];
+    list[index][name] = value;
+    setItems(list);
+  };
 
   return(
     <Container>
@@ -44,35 +66,34 @@ export default function PurchaseRegister() {
         <IoArrowBackCircleSharp color="crimson" size={60} />
       </div>
       <form onSubmit={addPurchase}>
-        <input type="text"
-          value={fornecedor}
-          placeholder="Fornecedor"
-          onChange={e => setFornecedor(e.target.value)}
-        />
-        <input type="text"
-          value={nome}
-          placeholder="Nome do produto"
-          onChange={e => setNome(e.target.value)}
-        />
-        <input type="number"
-          value={quantidade}
-          placeholder="Quantidade"
-          onChange={e => setQuantidade(e.target.value)}
-        />
-        <input type="text"
-          value={medida}
-          placeholder="Kg, Un ou Pç"
-          onChange={e => setMedida(e.target.value)}
-        />
-        <input type="number"
-          step=".01"
-          value={preco}
-          placeholder="Preço"
-          onChange={e => setPreco(e.target.value)}
-        />
-        <button type="submit">
-          Cadastrar compra
-        </button>
+        <div className="opcoes">
+          {products.length > 0 ? renderProducts() : ""}
+        </div>
+        {items.map((item, index) => (
+      <div key={index}>
+        <label className="fields">
+          {item.name} price:
+          <input
+            type="text"
+            value={item.price}
+            onChange={(event) =>
+              handleItemChange(index, "price", event.target.value)
+            }
+          />
+        </label>
+        <label className="fields"> 
+          {item.name} quantity:
+          <input
+            type="text"
+            value={item.quantity}
+            onChange={(event) =>
+              handleItemChange(index, "quantity", event.target.value)
+            }
+          />
+        </label>
+      </div>
+    ))}
+    <button type="submit">Finalizar Compra</button>
       </form>
     </Container>
   )
