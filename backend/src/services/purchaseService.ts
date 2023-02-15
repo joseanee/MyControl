@@ -28,14 +28,30 @@ async function insert(data: PurchaseRequest[], id:number) {
 };
 
 async function getPurchases(id:number) {
-  const purchases = await purchaseRepository.getClientPurchases(id);
-  const cliente = await clienteRepository.clientById(id);
+  return await purchaseRepository.getPurchasesByClientId(id);
+}
 
-  return [cliente.name, purchases];
+async function getPurchaseInfo(id:number) {
+  const purchase = await purchaseRepository.getPurchaseById(id);
+  const cliente = await clienteRepository.clientById(purchase.clientId);
+  const purchases = await purchaseRepository.getClientPurchases(id);
+
+  const data = {
+    fornecedor: cliente.name,
+    data: purchase.createdAt,
+    formas: purchase.forma,
+    detalhes: purchase.detalhe,
+    valores: purchase.valor,
+    wasPaid: purchase.wasPaid,
+    produtos: purchases
+  }
+
+  return data;
 };
 
 const purchaseServices = {
   insert,
+  getPurchaseInfo,
   getPurchases
 };
 

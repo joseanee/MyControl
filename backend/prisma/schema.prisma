@@ -66,6 +66,7 @@ model Purchase {
   forma String[] @default([])
   detalhe String[] @default([])
   valor Float[] @default([])
+  wasPaid Boolean @default(false)
   createdAt DateTime @default(now())
   cliente   Cliente @relation(fields: [clientId], references: [id])
   register PurchaseProduct[]

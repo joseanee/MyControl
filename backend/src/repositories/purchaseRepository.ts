@@ -11,18 +11,26 @@ async function registerBoughtProduct(data:PurchaseData) {
 
 async function getPurchaseByClientId(clientId:number) {
   return prisma.purchase.findFirst({where:{clientId},orderBy:{id:'desc'}})
+};
+
+async function getPurchasesByClientId(clientId:number) {
+  return prisma.purchase.findMany({where:{clientId},orderBy:{id:'desc'}})
+};
+
+async function getPurchaseById(id:number) {
+  return prisma.purchase.findFirst({where:{id}});
 }
 
-async function getClientPurchases(clientId:number) {
-  return await prisma.purchase.findMany({
+async function getClientPurchases(purchaseId:number) {
+  return await prisma.purchaseProduct.findMany({
     where:{
-      clientId
+      purchaseId
     },
     select:{
-      createdAt:true,
-      forma:true,
-      detalhe:true,
-      valor:true
+      id:true,
+      price:true,
+      quantity:true,
+      produto:{}
     }
   })
 }
@@ -31,6 +39,8 @@ const purchaseRepository = {
   insert,
   getClientPurchases,
   getPurchaseByClientId,
+  getPurchasesByClientId,
+  getPurchaseById,
   registerBoughtProduct
 };
 

@@ -11,6 +11,10 @@ export const Container = styled.div`
     justify-content: center;
     align-items: center;
     height: 40px;
+
+    h3 {
+      margin-right: 240px;
+    }
   }
 
   h1 {

@@ -6,55 +6,69 @@ import { Container, Purchase } from "./style";
 import axios from "axios";
 
 export default function ReportsPage() {
-  const { info }:any = useContext(UserContext);
+  const [info, setInfo] = useState();
   const [purchases, setPurchases] = useState();
 
-  const { id } = useParams();
+  const { purchaseId } = useParams();
 
   useEffect(() => {
-    const promise = axios.get(`${import.meta.env.VITE_URL}/clients/${id}/purchases`);
+    const promise = axios.get(`${import.meta.env.VITE_URL}/clients/purchases/${purchaseId}`);
 
     promise.then(res => {
       setPurchases(res.data);
     });
 
+    const promise2 = axios.get(`${import.meta.env.VITE_URL}/info`);
+
+    promise2.then(res => {
+      setInfo(res.data);
+    })
+
   },[]);
 
   function renderProducts() {
-    return purchases[1].map((purchase, index) =>
+    return purchases.produtos.map((produto, index) =>
        <Purchase key={index}>
           <div className="left">
-            <h5>{purchase.produto.nome}</h5>
-            <h5 className="move">{(new Date(purchase.createdAt)).toLocaleDateString('pt-br')}</h5>
-            <h5 className="move">{purchase.produto.quantidade} {purchase.produto.medida}</h5>
-            <h5 className="move">R$ {(purchase.produto.preco).toFixed(2)}</h5>
-            <h5 className="move">R$ {(purchase.produto.preco * purchase.produto.quantidade).toFixed(2)}</h5>
-            <h5 className="move">R$ {(purchase.valor).toFixed(2)}</h5>
-            <h5 className="move">R$ {(purchase.produto.preco * purchase.produto.quantidade - purchase.valor).toFixed(2)}</h5>
+            <h5>{produto.produto.nome}</h5>
+            <h5 className="move">{produto.quantity} {produto.produto.medida}</h5>
+            <h5 className="move">R$ {(produto.price).toFixed(2)}</h5>
+            <h5 className="move">R$ {(produto.price * produto.quantity).toFixed(2)}</h5>
           </div>
        </Purchase>
     )
   }
 
   function renderInfo() {
-    return purchases[1].map((purchase, index) =>
-       <Purchase key={index}>
-          <div className="right">
-            <h5>{purchase.forma}</h5>
-            <h5 className="detalhes">{purchase.detalhe}</h5>
-            <h5>R$ {purchase.valor.toFixed(2)}</h5>
-          </div>
-       </Purchase>
-    )
+    let result;
+
+    for(let i = 0; i < purchases.valores.length;i++) {
+      result += <Purchase key={i}>
+      <div className="right">
+        <h5>{purchases.formas[i]}</h5>
+        <h5 className="detalhes">{purchase.detalhes[i]}</h5>
+        <h5>R$ {purchase.valores[i].toFixed(2)}</h5>
+      </div>
+   </Purchase>
+    }
+
+    return result;
   }
 
   function calculateTotal() {
     let soma = 0;
     let soma2 = 0;
 
-    purchases[1].map(e => {
-      soma += e.produto.preco * e.produto.quantidade;
-      soma2 += e.valor;
+    if(purchases.valores.length === 0) {
+      soma2 = 0;
+    }else {
+      purchases.valores.map(value => {
+        soma2 += value;
+      })
+    }
+
+    purchases.produtos.map(e => {
+      soma += e.price * e.quantity;
     });
 
     return [soma.toFixed(2),soma2.toFixed(2),(soma - soma2).toFixed(2)]
@@ -62,14 +76,17 @@ export default function ReportsPage() {
 
   return(
     <Container>
-      {Header(info)}
+      {info ? Header(info) : ""}
       <div className="organize">
         <h1>RELATÓRIO DE COMPRA</h1>
       </div>
       <div className="line"></div>
       <div className="organize">
         <h3>
-          Fornecedor: {purchases ? purchases[0] : ''}
+          Fornecedor: {purchases ? purchases.fornecedor : ''}
+        </h3>
+        <h3>
+          Data da compra: {purchases ? (new Date(purchases.data)).toLocaleDateString('pt-br') : ''}
         </h3>
       </div>
       <div className="line"></div>
@@ -81,12 +98,9 @@ export default function ReportsPage() {
       <div className="line"></div>
       <div className="info">
         <h4>Descrição do Produto</h4>
-        <h4>Data da compra</h4>
         <h4>Quantidade</h4>
         <h4>Preço Unitário</h4>
         <h4>Total</h4>
-        <h4>Valor pago</h4>
-        <h4>Restante</h4>
       </div>
       {
         purchases ? renderProducts() : ""

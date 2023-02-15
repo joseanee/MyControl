@@ -16,3 +16,11 @@ export async function getPurchases(req:Request, res:Response) {
 
   return res.status(200).send(purchases);
 };
+
+export async function getPurchaseInfo(req:Request, res:Response) {
+  const id = Number(req.params.id);
+
+  const purchases = await purchaseServices.getPurchaseInfo(id);
+
+  return res.status(200).send(purchases);
+};

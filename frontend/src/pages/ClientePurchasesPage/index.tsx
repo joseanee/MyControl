@@ -14,7 +14,7 @@ export default function ClientePurchasesPage() {
   const { id } = useParams();
 
   useEffect(() => {
-    const promise = axios.get(`${import.meta.env.VITE_URL}/purchases`);
+    const promise = axios.get(`${import.meta.env.VITE_URL}/clients/${id}/purchases`);
 
     promise.then(res => {
       setPurchase({});
@@ -36,7 +36,7 @@ export default function ClientePurchasesPage() {
         purchases && Object.keys(purchase).length === 0 ? Purchases(purchases, setChangeState, changeState) : ""
       }
       {
-        Object.keys(purchase).length !== 0 ? Purchases(purchase, setChangeState, changeState) : ""
+        Object.keys(purchase).length !== 0 ? Purchases(purchase) : ""
       }
     </Container>
   )
