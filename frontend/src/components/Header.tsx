@@ -5,7 +5,7 @@ export default function Header(props:Empresa) {
   return(
     <Container>
       <div className="left">
-        <img src="https://i.pinimg.com/736x/33/b8/69/33b869f90619e81763dbf1fccc896d8d--lion-logo-modern-logo.jpg" alt="logo" />
+        <img src="http://jornalcobaia.com.br/wp-content/uploads/2019/10/reciclagem.png" alt="logo" />
         <div className="left2">
           <h1>{props.name}</h1>
           <h2>{props.description}</h2>
@@ -15,7 +15,8 @@ export default function Header(props:Empresa) {
           <h2>{props.rua}</h2>
           <h2>Bairro: {props.bairro} - CEP: {props.cep}</h2>
           <h2>{props.cidade}/{props.estado}</h2>
-          <h2>Fone: {props.telefone} - CNPJ: {props.cnpj}</h2>
+          <h2>Fone: {props.telefone}</h2>
+          <h2>JM ESCOBAR - CNPJ: {props.cnpj}</h2>
       </div>
     </Container>
   )

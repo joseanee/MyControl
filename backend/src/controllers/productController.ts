@@ -15,7 +15,23 @@ export async function newProduct(req:Request, res:Response) {
 };
 
 export async function getProducts(req:Request, res:Response) {
+  const { name }= req.query;
+
+  if(name) {
+    const product = await productServices.getProduct(name.toString());
+
+    return res.status(200).send(product);
+  }
+
   const products = await productServices.getProducts();
+
+  return res.status(200).send(products);
+}
+
+export async function removeProduct(req:Request, res:Response) {
+  const id = Number(req.params.id);
+
+  const products = await productServices.remove(id);
 
   return res.status(200).send(products);
 }

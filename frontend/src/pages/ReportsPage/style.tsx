@@ -104,5 +104,9 @@ export const Purchase = styled.div`
     height: 26px;
     word-wrap: break-word;
     overflow-y: scroll;
+
+    ::-webkit-scrollbar {
+    	display: none;
+	  }	
   }
 `

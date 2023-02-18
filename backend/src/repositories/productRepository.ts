@@ -10,13 +10,18 @@ async function getProducts() {
 };
 
 async function getByName(name: string) {
-  return await prisma.produto.findFirst({where:{nome:name},orderBy:{id:'desc'}});
+  return await prisma.produto.findFirst({where:{nome:name}});
+};
+
+async function deleteProduct(id: number) {
+  await prisma.produto.delete({where:{id}});
 }
 
 const productRepository = {
   insert,
   getProducts,
-  getByName
+  getByName,
+  deleteProduct
 };
 
 export default productRepository;

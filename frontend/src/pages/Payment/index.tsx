@@ -24,12 +24,21 @@ export default function Payment() {
 
   function calculateTotal() {
     let soma = 0;
+    let soma2 = 0;
+
+    if(purchases.valores.length === 0) {
+      soma2 = 0;
+    }else {
+      purchases.valores.map(value => {
+        soma2 += value;
+      })
+    }
 
     purchases.produtos.map(e => {
       soma += e.price * e.quantity;
     });
 
-    return soma.toFixed(2);
+    return (soma - soma2).toFixed(2);
   }
 
   async function pay(event:any) {
@@ -42,7 +51,7 @@ export default function Payment() {
     }
 
     try {
-      await axios.post(`${import.meta.env.VITE_URL}/products/add`,body);
+      await axios.put(`${import.meta.env.VITE_URL}/purchases/${purchaseId}/update`,body);
       alert("Pagamento registrado!!");
     } catch (error) {
       alert("Falha ao registrar pagamento!");
@@ -51,7 +60,7 @@ export default function Payment() {
 
   return(
     <Container>
-      <div className="voltar" onClick={() => navigate('/')}>
+      <div className="voltar" onClick={() => navigate(-1)}>
         <IoArrowBackCircleSharp color="crimson" size={60} />
       </div>
       <h1>Valor desta conta: R$ {purchases ? calculateTotal() : ""}</h1>
@@ -69,7 +78,7 @@ export default function Payment() {
         <input type="number"
           value={valor}
           placeholder="Quantia"
-          onChange={e => setValor(Number(e.target.value))}
+          onChange={e => setValor(e.target.value)}
         />
         <button type="submit">
           Efetuar Pagamento

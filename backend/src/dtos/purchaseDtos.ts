@@ -8,6 +8,12 @@ export type PurchaseRequest = {
   quantity: number,
 }
 
+export type PaymentRequest = {
+  forma:string,
+  detalhe: string,
+  valor: number
+}
+
 export type PurchaseData = {
   productId: number,
   purchaseId: number,

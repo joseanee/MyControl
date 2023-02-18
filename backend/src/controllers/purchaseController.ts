@@ -12,6 +12,13 @@ export async function newPurchase(req:Request, res:Response) {
 export async function getPurchases(req:Request, res:Response) {
   const id = Number(req.params.id);
 
+  const { initial, final } = req.query;
+
+  if(initial && final) {
+    const purchases = await purchaseServices.getPurchasesByDate(id,initial.toString(),final.toString());
+    return res.status(200).send(purchases);
+  }
+
   const purchases = await purchaseServices.getPurchases(id);
 
   return res.status(200).send(purchases);
@@ -24,3 +31,11 @@ export async function getPurchaseInfo(req:Request, res:Response) {
 
   return res.status(200).send(purchases);
 };
+
+export async function addPayment(req:Request, res:Response) {
+  const id = Number(req.params.id);
+
+  await purchaseServices.payment(req.body, id);
+
+  return res.status(200).send("OK");
+}

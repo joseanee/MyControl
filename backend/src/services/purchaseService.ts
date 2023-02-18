@@ -1,5 +1,5 @@
 import { PurchaseRequest } from "../dtos/purchaseDtos";
-import { PurchaseCreationDTO } from "../dtos/purchaseDtos";
+import { PurchaseCreationDTO, PaymentRequest } from "../dtos/purchaseDtos";
 import productRepository from "../repositories/productRepository";
 import clienteRepository from "../repositories/clienteRepository";
 import purchaseRepository from "../repositories/purchaseRepository";
@@ -29,7 +29,15 @@ async function insert(data: PurchaseRequest[], id:number) {
 
 async function getPurchases(id:number) {
   return await purchaseRepository.getPurchasesByClientId(id);
-}
+};
+
+async function getPurchasesByDate(id:number, initial:string, final:string) {
+
+  const initialDate = new Date(formatStringData(initial));
+  const finalDate = new Date(formatStringData(final));
+
+  return await purchaseRepository.getClientPurchasesByDate(id, initialDate, finalDate);
+};
 
 async function getPurchaseInfo(id:number) {
   const purchase = await purchaseRepository.getPurchaseById(id);
@@ -49,10 +57,55 @@ async function getPurchaseInfo(id:number) {
   return data;
 };
 
+async function payment(data:PaymentRequest, id:number) {
+  const purchase = await purchaseRepository.getPurchaseById(id);
+
+  const info = await getPurchaseInfo(id);
+
+  if((calculateTotal(info) - Number(data.valor)) === 0) {
+    purchase.wasPaid = true;
+  }
+
+  purchase.forma.push(data.forma);
+  purchase.detalhe.push(data.detalhe);
+  purchase.valor.push(Number(data.valor));
+
+  await purchaseRepository.addPayment(purchase);
+}
+
 const purchaseServices = {
   insert,
   getPurchaseInfo,
-  getPurchases
+  getPurchases,
+  getPurchasesByDate,
+  payment
 };
+
+function calculateTotal(purchases:any) {
+  let soma = 0;
+  let soma2 = 0;
+
+  if(purchases.valores.length === 0) {
+    soma2 = 0;
+  }else {
+    purchases.valores.map(value => {
+      soma2 += value;
+    })
+  }
+
+  purchases.produtos.map(e => {
+    soma += e.price * e.quantity;
+  });
+
+  return soma - soma2;
+}
+
+function formatStringData(data:string) {
+  var dia  = data.split("/")[0];
+  var mes  = data.split("/")[1];
+  var ano  = data.split("/")[2];
+
+  return ano + '-' + ("0"+mes).slice(-2) + '-' + ("0"+dia).slice(-2);
+}
 
 export default purchaseServices;

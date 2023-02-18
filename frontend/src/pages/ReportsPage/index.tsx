@@ -30,28 +30,28 @@ export default function ReportsPage() {
     return purchases.produtos.map((produto, index) =>
        <Purchase key={index}>
           <div className="left">
+            <h5>{index + 1}</h5>
             <h5>{produto.produto.nome}</h5>
             <h5 className="move">{produto.quantity} {produto.produto.medida}</h5>
-            <h5 className="move">R$ {(produto.price).toFixed(2)}</h5>
-            <h5 className="move">R$ {(produto.price * produto.quantity).toFixed(2)}</h5>
+            <h5 className="move">{(produto.price).toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}</h5>
+            <h5 className="move">{(produto.price * produto.quantity).toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}</h5>
           </div>
        </Purchase>
     )
   }
 
   function renderInfo() {
-    let result;
+    let result = [];
 
     for(let i = 0; i < purchases.valores.length;i++) {
-      result += <Purchase key={i}>
+      result.push(<Purchase key={i}>
       <div className="right">
         <h5>{purchases.formas[i]}</h5>
-        <h5 className="detalhes">{purchase.detalhes[i]}</h5>
-        <h5>R$ {purchase.valores[i].toFixed(2)}</h5>
+        <h5 className="detalhes">{purchases.detalhes[i]}</h5>
+        <h5>{purchases.valores[i].toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}</h5>
       </div>
-   </Purchase>
+   </Purchase>)
     }
-
     return result;
   }
 
@@ -71,7 +71,9 @@ export default function ReportsPage() {
       soma += e.price * e.quantity;
     });
 
-    return [soma.toFixed(2),soma2.toFixed(2),(soma - soma2).toFixed(2)]
+    return [soma.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}),
+    soma2.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}),
+    (soma - soma2).toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})];
   }
 
   return(
@@ -97,6 +99,7 @@ export default function ReportsPage() {
       </div>
       <div className="line"></div>
       <div className="info">
+        <h4>Enumeração</h4>
         <h4>Descrição do Produto</h4>
         <h4>Quantidade</h4>
         <h4>Preço Unitário</h4>
@@ -122,11 +125,11 @@ export default function ReportsPage() {
       }
       <div className="line"></div>
       <div className="footer">
-        <h4>Quantia paga: R$ {purchases ? calculateTotal()[1] : ""}</h4>
+        <h4>Quantia paga: {purchases ? calculateTotal()[1] : ""}</h4>
         <div className="linefooter"></div>
-        <h4>Valor total dos produtos: R$ {purchases ? calculateTotal()[0] : ""}</h4>
+        <h4>Valor total dos produtos: {purchases ? calculateTotal()[0] : ""}</h4>
         <div className="linefooter"></div>
-        <h4>Valor restante: R$ {purchases ? calculateTotal()[2] : ""}</h4>
+        <h4>Valor restante: {purchases ? calculateTotal()[2] : ""}</h4>
         <div className="linefooter"></div>
       </div>
     </Container>

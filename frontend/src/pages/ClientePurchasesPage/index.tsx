@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import axios from "axios";
-import { Container } from "../ClientesPage/style";
+import { Container } from "./style";
 import Purchases from "../../components/Purchase";
 import { useNavigate, useParams } from "react-router-dom";
 import { IoArrowBackCircleSharp } from "react-icons/io5";
@@ -9,6 +9,8 @@ export default function ClientePurchasesPage() {
   const [purchases, setPurchases] = useState();
   const [purchase, setPurchase] = useState({});
   const [changeState, setChangeState] = useState(0);
+  const [initialDate, setInitialDate] = useState('');
+  const [finalDate, setFinalDate] = useState('');
 
   const navigate = useNavigate();
   const { id } = useParams();
@@ -23,11 +25,39 @@ export default function ClientePurchasesPage() {
     
   },[changeState]);
 
+  function filterByDate(event:any) {
+    event.preventDefault();
+
+    const promise = axios.get(`${import.meta.env.VITE_URL}/clients/${id}/purchases?initial=${initialDate}&final=${finalDate}`);
+
+    promise.then(res => {
+      setPurchase({});
+      setPurchases(res.data);
+    })
+  }
+
   return(
     <Container>
       <div className="title">
         <h1>Compras do Cliente</h1>
         <button onClick={() => navigate(`/purchases/${id}`)}>Nova Compra</button>
+        <form onSubmit={filterByDate}>
+          <input 
+            type="text"
+            placeholder="Data inicial dd/mm/yyyy"
+            value={initialDate}
+            required={true}
+            onChange={e => setInitialDate(e.target.value)}
+          />
+          <input 
+            type="text"
+            placeholder="Data final dd/mm/yyyy"
+            value={finalDate}
+            required={true}
+            onChange={e => setFinalDate(e.target.value)}
+          />
+          <button type="submit">Filtrar</button>
+        </form>
       </div>
       <div className="voltar" onClick={() => navigate('/')}>
         <IoArrowBackCircleSharp color="crimson" size={60} />

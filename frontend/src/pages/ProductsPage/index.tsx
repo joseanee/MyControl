@@ -33,7 +33,8 @@ export default function ProductsPage() {
         return;
       }
 
-      const { data:client } = await axios.get(`${import.meta.env.VITE_URL}/produtos?name=${name}`);
+      const { data:client } = await axios.get(`${import.meta.env.VITE_URL}/products?name=${nome}`);
+      console.log(client)
       const arr:Produto[] = [];
 
       arr.push(client);

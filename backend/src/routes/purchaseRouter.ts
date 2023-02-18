@@ -1,10 +1,11 @@
 import { Router } from "express";
-import { getPurchaseInfo, getPurchases, newPurchase } from "../controllers/purchaseController";
+import { getPurchaseInfo, getPurchases, newPurchase, addPayment } from "../controllers/purchaseController";
 
-const pruchaseRouter = Router();
+const purchaseRouter = Router();
 
-pruchaseRouter.post('/purchases/:id/add', newPurchase);
-pruchaseRouter.get('/clients/:id/purchases', getPurchases);
-pruchaseRouter.get('/clients/purchases/:id', getPurchaseInfo);
+purchaseRouter.post('/purchases/:id/add', newPurchase);
+purchaseRouter.put('/purchases/:id/update', addPayment);
+purchaseRouter.get('/clients/:id/purchases', getPurchases);
+purchaseRouter.get('/clients/purchases/:id', getPurchaseInfo);
 
-export default pruchaseRouter;
+export default purchaseRouter;

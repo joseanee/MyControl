@@ -41,20 +41,16 @@ export const Container = styled.div`
     }
 
     .opcoes {
-      display: flex;
-      width: 80%;
-      border: 2px solid black;
-      min-height: 120px;
-      align-items: center;
-      padding-left: 12px;
-      overflow-x: scroll;
-
       label {
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        width: 80px;
+        min-width: 80px;
+        min-height: 80px;
+        white-space: nowrap;
+        overflow: hidden;  
+        text-overflow: ellipsis;
       }
     }
   }
@@ -74,5 +70,16 @@ export const Container = styled.div`
     input {
       width: 200px;
     }
+  }
+
+  .opcoes {
+    display: flex;
+    width: 100%;
+    border: 2px solid black;
+    min-height: 120px;
+    align-items: center;
+    padding-left: 12px;
+
+    overflow-x: scroll;
   }
 `

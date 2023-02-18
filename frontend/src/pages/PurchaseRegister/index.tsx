@@ -19,6 +19,7 @@ export default function PurchaseRegister() {
 
     try {
       await axios.post(`${import.meta.env.VITE_URL}/purchases/${id}/add`,body);
+      navigate(-1);
       alert("Compra registrada!");
     } catch (error) {
       alert(error);
@@ -64,7 +65,7 @@ export default function PurchaseRegister() {
 
   return(
     <Container>
-      <div className="voltar" onClick={() => navigate('/')}>
+      <div className="voltar" onClick={() => navigate(-1)}>
         <IoArrowBackCircleSharp color="crimson" size={60} />
       </div>
       <form onSubmit={addPurchase}>
@@ -74,7 +75,7 @@ export default function PurchaseRegister() {
         {items.map((item, index) => (
       <div key={index}>
         <label className="fields">
-          {item.name} price:
+          {item.name} Preço:
           <input
             type="text"
             value={item.price}
@@ -84,7 +85,7 @@ export default function PurchaseRegister() {
           />
         </label>
         <label className="fields"> 
-          {item.name} quantity:
+          {item.name} Quantidade:
           <input
             type="text"
             value={item.quantity}

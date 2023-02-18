@@ -1,3 +1,4 @@
+import { Purchase } from "@prisma/client";
 import prisma from "../database";
 import { PurchaseCreationDTO, PurchaseData } from "../dtos/purchaseDtos";
 
@@ -10,15 +11,15 @@ async function registerBoughtProduct(data:PurchaseData) {
 }
 
 async function getPurchaseByClientId(clientId:number) {
-  return prisma.purchase.findFirst({where:{clientId},orderBy:{id:'desc'}})
+  return await prisma.purchase.findFirst({where:{clientId},orderBy:{id:'desc'}})
 };
 
 async function getPurchasesByClientId(clientId:number) {
-  return prisma.purchase.findMany({where:{clientId},orderBy:{id:'desc'}})
+  return await prisma.purchase.findMany({where:{clientId},orderBy:{id:'desc'}})
 };
 
 async function getPurchaseById(id:number) {
-  return prisma.purchase.findFirst({where:{id}});
+  return await prisma.purchase.findFirst({where:{id}});
 }
 
 async function getClientPurchases(purchaseId:number) {
@@ -35,13 +36,26 @@ async function getClientPurchases(purchaseId:number) {
   })
 }
 
+async function addPayment(data:Purchase) {
+  await prisma.purchase.update({where:{id:data.id},data});
+};
+
+async function getClientPurchasesByDate(clientId: number, initial:Date, final:Date) {
+ return await prisma.purchase.findMany({where:{clientId,createdAt:{
+  lte: final,
+  gte: initial
+ }}})
+}
+
 const purchaseRepository = {
   insert,
   getClientPurchases,
+  getClientPurchasesByDate,
   getPurchaseByClientId,
   getPurchasesByClientId,
   getPurchaseById,
-  registerBoughtProduct
+  registerBoughtProduct,
+  addPayment
 };
 
 export default purchaseRepository;

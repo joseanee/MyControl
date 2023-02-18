@@ -8,7 +8,7 @@ export default function Produtos(props:Produto[], setChangeState:any, changeStat
 
   async function deleteProduto(id:number) {
     try {
-      await axios.delete(`${import.meta.env.VITE_URL}/produtos/delete/${id}`);
+      await axios.delete(`${import.meta.env.VITE_URL}/products/${id}/delete`);
       setChangeState(changeState + 1);
       alert("Removido com sucesso!");
     } catch (error) {
