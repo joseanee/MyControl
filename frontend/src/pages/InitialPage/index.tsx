@@ -12,7 +12,7 @@ export default function InitialPage() {
   const { setInfo }:any = useContext(UserContext);
 
   useEffect(() => {
-    const promise = axios.get(`${import.meta.env.VITE_MINHA_URL}/info`);
+    const promise = axios.get(`${import.meta.env.VITE_URL}/info`);
 
     promise.then(res => {
       console.log(res.data)
