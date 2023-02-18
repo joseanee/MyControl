@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
-import { Container } from "../ClienteRegister/style";
+import { useState } from "react";
+import { Container } from "./style";
 import { IoArrowBackCircleSharp } from "react-icons/io5";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 
-export default function ClienteUpdate() {
+export default function ClienteRegister() {
   const [name, setName] = useState('');
   const [telefone, setTelefone] = useState('');
   const [pix, setPix] = useState('');
@@ -18,30 +18,10 @@ export default function ClienteUpdate() {
 
   const navigate = useNavigate();
 
-  const { id } = useParams();
-
-  useEffect(() => {
-    const promise = axios.get(`${import.meta.env.VITE_URL}/clients/${id}`);
-
-    promise.then(res => {
-      setName(res.data.name);
-      setTelefone(res.data.telefone);
-      setPix(res.data.pix);
-      setCpf(res.data.cpf);
-      setCnpj(res.data.cnpj);
-      setRua(res.data.rua);
-      setBairro(res.data.bairro);
-      setCep(res.data.cep);
-      setCidade(res.data.cidade);
-      setEstado(res.data.estado);
-    })
-  },[])
-
-  async function updateClient(event:any) {
+  async function addClient(event) {
     event.preventDefault();
 
     const body = {
-      id,
       name,
       telefone,
       pix,
@@ -55,20 +35,20 @@ export default function ClienteUpdate() {
     }
 
     try {
-      await axios.put(`${import.meta.env.VITE_URL}/clients/update/${id}`,body);
+      await axios.post(`${import.meta.env.VITE_URL}/register`,body);
       alert("Sucesso!");
-      navigate('/clients');
+      navigate('/');
     } catch (error) {
-      alert("Falha ao atualizar dados do cliente!");
+      alert("Falha ao cadastrar cliente!");
     }
   }
 
   return(
     <Container>
-      <div className="voltar" onClick={() => navigate('/clients')}>
+      <div className="voltar" onClick={() => navigate('/')}>
         <IoArrowBackCircleSharp color="crimson" size={60} />
       </div>
-      <form onSubmit={updateClient}>
+      <form onSubmit={addClient}>
         <input type="text"
           value={name}
           placeholder="Nome"
@@ -120,7 +100,7 @@ export default function ClienteUpdate() {
           onChange={e => setEstado(e.target.value)}
         />
         <button type="submit">
-          Atualizar dados
+          Cadastrar Cliente
         </button>
       </form>
     </Container>

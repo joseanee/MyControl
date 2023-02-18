@@ -1,12 +1,11 @@
 import styled from "styled-components/macro";
-import { Produto } from "../entities/Product";
 import { IoBrush, IoClose } from "react-icons/io5";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-export default function Produtos(props:Produto[], setChangeState:any, changeState:number) {
+export default function Produtos(props, setChangeState, changeState) {
 
-  async function deleteProduto(id:number) {
+  async function deleteProduto(id) {
     try {
       await axios.delete(`${import.meta.env.VITE_URL}/products/${id}/delete`);
       setChangeState(changeState + 1);

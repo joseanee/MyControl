@@ -14,10 +14,10 @@ export const Container = styled.div`
   .title {
     display: flex;
     position: absolute;
-    width: 720px;
+    width: 900px;
     justify-content: space-around;
     top: 6px;
-    left: 30%;
+    left: 20%;
 
     form {
       input {

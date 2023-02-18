@@ -1,43 +1,44 @@
 import { useEffect, useState } from "react"
 import axios from "axios";
-import { Container } from "./style";
-import Clientes from "../../components/Cliente";
+import { Container } from "../ClientesPage/style";
+import Produtos from "../../components/Product";
 import { useNavigate } from "react-router-dom";
 import { IoArrowBackCircleSharp } from "react-icons/io5";
-import { Cliente } from "../../entities/Cliente";
 
-export default function ClientesPage() {
-  const [clients, setClients] = useState();
-  const [client, setClient] = useState({});
-  const [name, setName] = useState('');
+export default function ProductsPage() {
+  const [products, setProducts] = useState();
+  const [product, setProduct] = useState({});
+  const [nome, setNome] = useState('');
   const [changeState, setChangeState] = useState(0);
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    const promise = axios.get(`${import.meta.env.VITE_URL}/clients`);
+    const promise = axios.get(`${import.meta.env.VITE_URL}/products`);
 
     promise.then(res => {
-      setClient({});
-      setClients(res.data);
+      setProduct({});
+      setProducts(res.data);
     })
+    
   },[changeState]);
 
-  async function findByName(event:any) {
+  async function findByName(event) {
     event.preventDefault();
 
     try {
-      if(!name) {
+      if(!nome) {
         setChangeState(changeState + 1);
         return;
       }
 
-      const { data:client } = await axios.get(`${import.meta.env.VITE_URL}/clients?name=${name}`);
-      const arr:Cliente[] = [];
+      const { data:client } = await axios.get(`${import.meta.env.VITE_URL}/products?name=${nome}`);
+      console.log(client)
+      const arr = [];
 
       arr.push(client);
 
-      setClient(arr);
+      setProduct(arr);
     } catch (error) {
       alert(error);
     }
@@ -46,12 +47,12 @@ export default function ClientesPage() {
   return(
     <Container>
       <div className="title">
-        <h1>Clientes</h1>
+        <h1>Produtos</h1>
         <form onSubmit={findByName}>
           <input type="text"
             placeholder="Procurar"
-            value={name}
-            onChange={e => setName(e.target.value)}
+            value={nome}
+            onChange={e => setNome(e.target.value)}
           />
         </form>
       </div>
@@ -59,10 +60,10 @@ export default function ClientesPage() {
         <IoArrowBackCircleSharp color="crimson" size={60} />
       </div>
       {
-        clients && Object.keys(client).length === 0 ? Clientes(clients, setChangeState, changeState) : ""
+        products && Object.keys(product).length === 0 ? Produtos(products, setChangeState, changeState) : ""
       }
       {
-        Object.keys(client).length !== 0 ? Clientes(client) : ""
+        Object.keys(product).length !== 0 ? Produtos(product) : ""
       }
     </Container>
   )

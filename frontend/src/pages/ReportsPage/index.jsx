@@ -1,7 +1,7 @@
-import { useContext, useEffect, useState } from "react";
+// @ts-ignore
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Header from "../../components/Header";
-import UserContext from "../../context/UserContext";
 import { Container, Purchase } from "./style";
 import axios from "axios";
 
@@ -31,10 +31,10 @@ export default function ReportsPage() {
        <Purchase key={index}>
           <div className="left">
             <h5>{index + 1}</h5>
-            <h5>{produto.produto.nome}</h5>
+            <h5>{produto.produto?.nome}</h5>
             <h5 className="move">{produto.quantity} {produto.produto.medida}</h5>
             <h5 className="move">{(produto.price).toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}</h5>
-            <h5 className="move">{(produto.price * produto.quantity).toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}</h5>
+            <h5 className="move">{(produto.price * produto?.quantity).toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}</h5>
           </div>
        </Purchase>
     )

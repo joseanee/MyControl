@@ -25,7 +25,7 @@ export default function ClientePurchasesPage() {
     
   },[changeState]);
 
-  function filterByDate(event:any) {
+  function filterByDate(event) {
     event.preventDefault();
 
     const promise = axios.get(`${import.meta.env.VITE_URL}/clients/${id}/purchases?initial=${initialDate}&final=${finalDate}`);
@@ -40,6 +40,7 @@ export default function ClientePurchasesPage() {
     <Container>
       <div className="title">
         <h1>Compras do Cliente</h1>
+        <button onClick={() => navigate(`/clients/${id}/transactions`)}>Transações</button>
         <button onClick={() => navigate(`/purchases/${id}`)}>Nova Compra</button>
         <form onSubmit={filterByDate}>
           <input 

@@ -1,7 +1,6 @@
 import styled from "styled-components/macro";
-import { Empresa } from "../entities/Empresa";
 
-export default function Header(props:Empresa) {
+export default function Header(props) {
   return(
     <Container>
       <div className="left">

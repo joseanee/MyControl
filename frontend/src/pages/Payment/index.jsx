@@ -41,7 +41,7 @@ export default function Payment() {
     return (soma - soma2).toFixed(2);
   }
 
-  async function pay(event:any) {
+  async function pay(event) {
     event.preventDefault();
 
     const body = {

@@ -12,6 +12,7 @@ import ReportsPage from "./pages/ReportsPage";
 import { useState } from "react";
 import ClientePurchasesPage from "./pages/ClientePurchasesPage";
 import Payment from "./pages/Payment";
+import ClienteTransactions from "./pages/ClienteTransactions";
 
 export default function App(){
     const [info, setInfo] = useState();
@@ -30,6 +31,7 @@ export default function App(){
                     <Route path="/client/add" element={<ClienteRegister />} />
                     <Route path="/clients" element={<ClientesPage />} />
                     <Route path="/clients/:id/purchases" element={<ClientePurchasesPage />} />
+                    <Route path="/clients/:id/transactions" element={<ClienteTransactions />} />
                     <Route path="/clients/:id/purchases/:purchaseId" element={<ReportsPage />} />
                     <Route path="/clients/:id/purchases/:purchaseId/payment" element={<Payment />} />
                     <Route path="/clients/update/:id" element={<ClienteUpdate />} />

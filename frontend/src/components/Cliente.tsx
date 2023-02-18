@@ -1,12 +1,11 @@
 import styled from "styled-components/macro";
-import { Cliente } from "../entities/Cliente";
 import { IoBrush, IoClose, IoEye } from "react-icons/io5";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-export default function Clientes(props:Cliente[], setChangeState:any, changeState:number) {
+export default function Clientes(props, setChangeState, changeState) {
 
-  async function deleteCliente(id:number) {
+  async function deleteCliente(id) {
     try {
       await axios.delete(`${import.meta.env.VITE_URL}/clients/delete/${id}`);
       setChangeState(changeState + 1);

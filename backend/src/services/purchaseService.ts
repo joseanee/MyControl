@@ -71,6 +71,32 @@ async function payment(data:PaymentRequest, id:number) {
   purchase.valor.push(Number(data.valor));
 
   await purchaseRepository.addPayment(purchase);
+};
+
+async function getTransactions(id:number, initial:string, final:string) {
+  const initialDate = new Date(formatStringData(initial));
+  const finalDate = new Date(formatStringData(final));
+
+  const data = {};
+
+  const purchases:any = await purchaseRepository.getClientPurchasesByDate(id, initialDate, finalDate);
+
+  for(const purchase of purchases) {
+    const info =  await purchaseRepository.getClientPurchases(purchase.id);
+    purchase.product = info;
+  }
+
+  for(const purchase of purchases) {
+    for(let i = 0; i < purchase.product.length;i++) {
+      if(data[purchase.product[i].produto.nome + " " + purchase.product[i].produto.medida]) {
+        data[purchase.product[i].produto.nome + " " + purchase.product[i].produto.medida] += purchase.product[i].quantity
+      } else {
+        data[purchase.product[i].produto.nome + " " + purchase.product[i].produto.medida] = purchase.product[i].quantity
+      }
+    }
+  }
+
+  return data;
 }
 
 const purchaseServices = {
@@ -78,6 +104,7 @@ const purchaseServices = {
   getPurchaseInfo,
   getPurchases,
   getPurchasesByDate,
+  getTransactions,
   payment
 };
 

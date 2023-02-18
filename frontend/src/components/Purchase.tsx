@@ -6,7 +6,7 @@ interface Props {
   wasPaid: boolean
 }
 
-export default function Purchases(props:any[]) {
+export default function Purchases(props) {
 
   const { id } = useParams();
 

@@ -15,6 +15,7 @@ export default function InitialPage() {
     const promise = axios.get(`${import.meta.env.VITE_URL}/info`);
 
     promise.then(res => {
+      console.log(res.data)
       setInfo(res.data);
       setEmpresa(res.data);
     })
