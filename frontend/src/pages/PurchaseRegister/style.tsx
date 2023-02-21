@@ -97,4 +97,8 @@ export const Container = styled.div`
       font-size: 20px;
       cursor: pointer;
     }
+
+  button.cancel {
+    background-color: crimson;
+  }
 `

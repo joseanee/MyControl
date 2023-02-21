@@ -79,7 +79,8 @@ export default function PurchaseRegister() {
           <div className="confirmation">
           {renderList()}
           </div>
-          <button onClick={() => addPurchase()}>Finalizar pedido</button> 
+          <button onClick={() => addPurchase()}>Finalizar pedido</button>
+          <button className="cancel" onClick={() => setConfirm(false)}>Cancelar</button> 
         </>
         : 
         <>
