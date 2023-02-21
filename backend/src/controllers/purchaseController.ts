@@ -37,6 +37,17 @@ export async function getTransactions(req:Request, res:Response) {
   return res.status(200).send([]);
 };
 
+export async function getStock(req:Request, res:Response) {
+  const { initial, final } = req.query;
+
+  if(initial && final) {
+    const info = await purchaseServices.getStockInfo(initial.toString(),final.toString());
+    return res.status(200).send(info);
+  }
+
+  return res.status(200).send([]);
+};
+
 export async function getPurchaseInfo(req:Request, res:Response) {
   const id = Number(req.params.id);
 

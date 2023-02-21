@@ -48,6 +48,11 @@ export default function InitialPage() {
             Cadastrar Produtos
           </button>
         </div>
+        <div className="relatorios">
+          <button onClick={() => navigate('/relatorios')}>
+            Relatório de Compras
+          </button>
+        </div>
       </Content>
       : 
       ''

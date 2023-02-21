@@ -30,16 +30,6 @@ export const Container = styled.div`
       margin-bottom: 6px;
     }
 
-    button {
-      height: 60px;
-      width: 50%;
-      margin-top: 6px;
-      background-color: #bff080;
-      color: #000000;
-      font-size: 20px;
-      cursor: pointer;
-    }
-
     .opcoes {
       label {
         display: flex;
@@ -82,4 +72,29 @@ export const Container = styled.div`
 
     overflow-x: scroll;
   }
+
+  .item {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .confirmation {
+    width: 60%;
+    height: 60vh;
+    border: solid 4px #000;
+    padding: 12px;
+    overflow-y: scroll;
+  }
+
+  button {
+      height: 60px;
+      width: 50%;
+      margin-top: 6px;
+      background-color: #bff080;
+      color: #000000;
+      font-size: 20px;
+      cursor: pointer;
+    }
 `

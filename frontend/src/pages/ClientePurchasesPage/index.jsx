@@ -60,7 +60,7 @@ export default function ClientePurchasesPage() {
           <button type="submit">Filtrar</button>
         </form>
       </div>
-      <div className="voltar" onClick={() => navigate('/')}>
+      <div className="voltar" onClick={() => navigate(-1)}>
         <IoArrowBackCircleSharp color="crimson" size={60} />
       </div>
       {

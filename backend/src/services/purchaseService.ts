@@ -96,7 +96,37 @@ async function getTransactions(id:number, initial:string, final:string) {
     }
   }
 
-  return data;
+  return getSortedHash(data);
+}
+
+async function getStockInfo(initial:string, final:string) {
+  const initialDate = new Date(formatStringData(initial));
+  const finalDate = new Date(formatStringData(final));
+
+  const data = {};
+
+  const clientes = await clienteRepository.getClients();
+
+  for(const cliente of clientes) {
+    const purchases:any = await purchaseRepository.getClientPurchasesByDate(cliente.id, initialDate, finalDate);
+
+    for(const purchase of purchases) {
+      const info =  await purchaseRepository.getClientPurchases(purchase.id);
+      purchase.product = info;
+    }
+  
+    for(const purchase of purchases) {
+      for(let i = 0; i < purchase.product.length;i++) {
+        if(data[purchase.product[i].produto.nome + " " + purchase.product[i].produto.medida]) {
+          data[purchase.product[i].produto.nome + " " + purchase.product[i].produto.medida] += purchase.product[i].quantity
+        } else {
+          data[purchase.product[i].produto.nome + " " + purchase.product[i].produto.medida] = purchase.product[i].quantity
+        }
+      }
+    }
+  }
+ 
+  return getSortedHash(data);
 }
 
 const purchaseServices = {
@@ -105,7 +135,8 @@ const purchaseServices = {
   getPurchases,
   getPurchasesByDate,
   getTransactions,
-  payment
+  payment,
+  getStockInfo
 };
 
 function calculateTotal(purchases:any) {
@@ -133,6 +164,18 @@ function formatStringData(data:string) {
   var ano  = data.split("/")[2];
 
   return ano + '-' + ("0"+mes).slice(-2) + '-' + ("0"+dia).slice(-2);
+}
+
+function getSortedHash(inputHash){
+  var resultHash = {};
+
+  var keys = Object.keys(inputHash);
+  keys.sort(function(a, b) {
+    return inputHash[a] - inputHash[b]
+  }).reverse().forEach(function(k) {
+    resultHash[k] = inputHash[k];
+  });
+  return resultHash;
 }
 
 export default purchaseServices;

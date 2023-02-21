@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getPurchaseInfo, getPurchases, newPurchase, addPayment, getTransactions } from "../controllers/purchaseController";
+import { getPurchaseInfo, getPurchases, newPurchase, addPayment, getTransactions, getStock } from "../controllers/purchaseController";
 
 const purchaseRouter = Router();
 
@@ -8,5 +8,6 @@ purchaseRouter.put('/purchases/:id/update', addPayment);
 purchaseRouter.get('/clients/:id/purchases', getPurchases);
 purchaseRouter.get('/clients/purchases/:id', getPurchaseInfo);
 purchaseRouter.get('/clients/:id/transactions', getTransactions);
+purchaseRouter.get('/relatorios', getStock);
 
 export default purchaseRouter;

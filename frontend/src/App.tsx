@@ -13,6 +13,7 @@ import { useState } from "react";
 import ClientePurchasesPage from "./pages/ClientePurchasesPage";
 import Payment from "./pages/Payment";
 import ClienteTransactions from "./pages/ClienteTransactions";
+import StockPage from "./pages/StockPage";
 
 export default function App(){
     const [info, setInfo] = useState();
@@ -38,6 +39,7 @@ export default function App(){
                     <Route path="/products/add" element={<ProductRegister />} />
                     <Route path="/products" element={<ProductsPage />} />
                     <Route path="/purchases/:id" element={<PurchaseRegister />} />
+                    <Route path="/relatorios" element={<StockPage />} />
                 </Routes>
             </UserContext.Provider>
         </BrowserRouter>
