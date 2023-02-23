@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "install": "npm i",
     "build": "tsc",
     "start": "npx prisma generate && npx prisma migrate dev && npx prisma db seed && node dist/server.js",
     "dev": "npx prisma migrate dev && npx prisma db seed && nodemon src/server.ts"
