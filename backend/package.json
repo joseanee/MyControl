@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "tsc",
     "start": "npx prisma migrate deploy && npx prisma db seed && node ./dist/server.js",
     "dev": "npx prisma migrate dev && npx prisma db seed && nodemon src/server.ts"
   },
