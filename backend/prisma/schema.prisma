@@ -55,7 +55,7 @@ model PurchaseProduct {
   productId Int
   purchaseId Int
   price Float
-  quantity Int
+  quantity Float
   produto Produto @relation(fields: [productId], references: [id])
   purchase Purchase @relation(fields: [purchaseId], references: [id])
 }
