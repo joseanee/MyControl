@@ -6,7 +6,7 @@ async function insert(data:ProductCreationDTO) {
 };
 
 async function getProducts() {
-  return await prisma.produto.findMany();
+  return await prisma.produto.findMany({orderBy:{nome:"asc"}});
 };
 
 async function getByName(name: string) {
