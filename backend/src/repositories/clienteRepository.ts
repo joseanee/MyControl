@@ -12,7 +12,7 @@ async function getClients() {
 };
 
 async function clientByName(name:string) {
-  return await prisma.cliente.findFirst({where:{name}})
+  return await prisma.cliente.findMany({where:{name:{startsWith:name}}});
 };
 
 async function clientById(id:number) {
