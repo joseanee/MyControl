@@ -1,0 +1,75 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  engineType = "binary"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Empresa {
+  id Int @id @default(autoincrement())
+  name String
+  description String
+  telefone String
+  cnpj String
+  rua String
+  bairro String
+  cep String
+  cidade String
+  estado String
+}
+
+model Cliente {
+  id Int @id @default(autoincrement())
+  name String
+  telefone String
+  pix String
+  cpf String?
+  cnpj String?
+  rua String
+  bairro String
+  cep String
+  cidade String
+  estado String
+  purchases Purchase[]
+
+  @@map("clientes")
+}
+
+model Produto {
+  id Int @id @default(autoincrement())
+  nome String @unique
+  medida String
+  register PurchaseProduct[]
+
+  @@map("produtos")
+}
+
+model PurchaseProduct {
+  id Int @id @default(autoincrement())
+  productId Int
+  purchaseId Int
+  price Float
+  quantity Float
+  produto Produto @relation(fields: [productId], references: [id])
+  purchase Purchase @relation(fields: [purchaseId], references: [id])
+}
+
+model Purchase {
+  id Int @id @default(autoincrement())
+  clientId Int
+  forma String[] @default([])
+  detalhe String[] @default([])
+  valor Float[] @default([])
+  wasPaid Boolean @default(false)
+  createdAt DateTime @default(now())
+  cliente   Cliente @relation(fields: [clientId], references: [id])
+  register PurchaseProduct[]
+  
+  @@map("purchases")
+}
