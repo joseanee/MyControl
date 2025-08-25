@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE "purchases" ADD COLUMN     "detalhe" TEXT NOT NULL DEFAULT '',
+ADD COLUMN     "forma" TEXT NOT NULL DEFAULT '',
+ADD COLUMN     "valor" DOUBLE PRECISION NOT NULL DEFAULT 0.0;
