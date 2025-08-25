@@ -148,14 +148,6 @@ async function getPurchases(id:number, page:number = 1, limit:number = 20, statu
   
   const totalPages = Math.ceil(totalFiltered / limit);
   
-  console.log(`=== DEBUG getPurchases FINAL ===`);
-  console.log(`Final purchases count:`, finalPurchases.length);
-  console.log(`First purchase:`, finalPurchases[0] ? {
-    id: finalPurchases[0].id,
-    valorTotal: finalPurchases[0].valorTotal,
-    produtosCount: finalPurchases[0].produtos?.length
-  } : 'No purchases');
-  
   return {
     purchases: finalPurchases,
     total: totalFiltered,
@@ -385,6 +377,22 @@ async function remove(id:number) {
   await purchaseRepository.removePurchase(id);
 }
 
+async function markAsCompleted(id:number) {
+  const purchase = await purchaseRepository.getPurchaseById(id);
+  
+  if (!purchase) {
+    throw new Error('Purchase not found');
+  }
+  
+  // Atualizar o status para CONCLUIDO e wasPaid para true
+  const updateData = {
+    status: "CONCLUIDO",
+    wasPaid: true
+  };
+  
+  await purchaseRepository.updatePurchase(id, updateData);
+}
+
 const purchaseServices = {
   insert,
   remove,
@@ -393,7 +401,8 @@ const purchaseServices = {
   getPurchasesByDate,
   getTransactions,
   payment,
-  getStockInfo
+  getStockInfo,
+  markAsCompleted
 };
 
 function calculateTotal(purchases:any) {
